@@ -1,12 +1,14 @@
 5 printchr$(147);chr$(31);
-6 print"++++++++++(>+++++++>+++++++++>+++<<<-)>++.---.+++++";
+6 print"++++++++++[>+++++++>+++++++++>+++<<<-]>++.---.+++++";
 7 print"++..+++.>>++.<---.<.>-----.<---.--------.>>+.#"
 8 print:print
+9 lp=asc("[")and(255-64):rp=asc("]")and(255-64)
 10 i=0:c=-1:r$=""
 15 bl$=left$("                                            ",21)
 20 dim n%(30)
 25 gosub 1100
-30 gosub1000:c=c+1:a$=chr$(peek(7680+c)):gosub1100
+30 gosub1000:c=c+1:p=peek(7680+c):if p<32 then p=p or 64 
+35 a$=chr$(p):gosub1100
 40 printchr$(145);bl$:print chr$(145);c;"/";a$;"/";i;"/";n%(i)
 100 if a$<>"+"goto200
 110 ifn%(i)=32767thenn%(i)=0:goto30
@@ -20,17 +22,17 @@
 600 ifa$<>","goto700
 610 getx$:ifx$=""goto610
 620 n%(i)=asc(x$):goto30
-700 ifa$<>"("then goto800
+700 ifa$<>"["then goto800
 710 if n%(i)<>0thengoto30
 715 k=0
-730 ch=peek(7680+c)and127:if ch=40then k=k+1
-740 if ch=41then k=k-1
+730 ch=peek(7680+c)and127:if ch=lp then k=k+1
+740 if ch=rp then k=k-1
 750 if k=0then goto 30
 760 gosub1000:c=c+1:gosub1100:goto 730
-800 if a$<>")"then goto900
+800 if a$<>"]"then goto900
 815 k=0
-830 ch=peek(7680+c)and127:if ch=40then k=k-1
-840 if ch=41then k=k+1
+830 ch=peek(7680+c)and127:if ch=lp then k=k-1
+840 if ch=rp then k=k+1
 850 gosub1000:c=c-1:gosub1100:if k=0 goto 30
 860 goto 830
 900 if a$="#"then gosub 1000:end

@@ -5,8 +5,8 @@
                  eins; in C: (*ptr)--
 ;   +: incpval | erhöht den Wert der Speicherzelle, auf die ptr zeigt, um eins
                  in C: (*ptr)++  
-;   (: while   | Anfang einer Whileschleife, bricht bei *ptr == 0 ab.
-;   ): wend    | Ende einer Whileschleife, springt zum korrespondierenden 
+;   [: while   | Anfang einer Whileschleife, bricht bei *ptr == 0 ab.
+;   ]: wend    | Ende einer Whileschleife, springt zum korrespondierenden 
                  Anfang
 ;   .: write   | schreibt *ptr in die Ausgabe (auf den Bildschirm oder in eine Datei)
 ;   ,: read    | liest ein Zeichen von der Eingabe (Tastatur, Datei) nach *ptr
@@ -76,9 +76,9 @@
 1679: 60         ; RTS - Rückkehr aus der Subroutine
 
 ; Variablen
-1680: 28         ; "(" öffnende Klammer
-1681: 29         ; ")" schließende Klammer
-1682: 28         ; "(" öffnende Klammer
+1680: 1B         ; "[" öffnende Klammer
+1681: 1D         ; "]" schließende Klammer
+1682: 1B         ; "[" öffnende Klammer
 1683: 00         ; Zähler für Klammern
 
 ; Hilfsroutine init_search für while/wend
@@ -213,20 +213,20 @@
 ; - Diese Subroutine führt nur einen einzelnen Suchschritt aus. Die Schleifenlogik,
 ;   die den codeptr weiterbewegt, muss außerhalb dieser Subroutine implementiert werden.
 
-; Einstiegspunkt für die Suche nach einer öffnenden Klammer ')'
+; Einstiegspunkt für die Suche nach einer öffnenden Klammer
 compare_open_paren:
 1760: A2 00      ; LDX #$00 - Setze X auf 0 (Suche nach '(')
 1762: F0 02      ; BEQ $1766 - Springe zur gemeinsamen Logik
 
-; Einstiegspunkt für die Suche nach einer schließenden Klammer '('
+; Einstiegspunkt für die Suche nach einer schließenden Klammer
 compare_closed_paren:
-1764: A2 01      ; LDX #$01 - Setze X auf 1 (Suche nach ')')
+1764: A2 01      ; LDX #$01 - Setze X auf 1 (Suche nach schl. Klammer)
 ; Gemeinsame Logik:
 1766: A0 00      ; LDY #$00 - Initialisiere Y-Register mit 0
 1768: B1 FD      ; LDA ($FD),Y - Lade das aktuelle Zeichen aus dem BF-Code
-176A: DD 80 16   ; CMP $1680,X - Vergleiche mit der ersten Klammer '(' oder ')'
+176A: DD 80 16   ; CMP $1680,X - Vergleiche mit der ersten Klammer
 176D: F0 0a      ; BEQ $1779 - Wenn gleich, springe zu decrement_counter
-176F: DD 81 16   ; CMP $1681,X - Vergleiche mit der zweiten Klammer '(' oder ')'
+176F: DD 81 16   ; CMP $1681,X - Vergleiche mit der zweiten Klammer
 1772: F0 01      ; BEQ $1775 - Wenn gleich, springe zu increment_counter
 1774: 60         ; RTS - Rückkehr, wenn kein relevantes Zeichen gefunden
 

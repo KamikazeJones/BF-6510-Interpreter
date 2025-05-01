@@ -27,7 +27,7 @@ rem 1060 rem incpvlo
 rem 1070 rem incpvhi
 1075 data -1,1670,a0,01,b1,fb,18,69,01,91,fb,60
 rem 1080 rem variables
-1085 data -1,1680,28,29,28,00
+1085 data -1,1680,1b,1d,1b,00
 rem 1090 rem init-search
 1095 data -1,1688,a0,00,b1,fb,d0,05,c8,b1,fb,f0,03,68,68,60,a9,01
 1096 data 8d,83,16,60
